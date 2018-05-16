@@ -1,0 +1,10 @@
+#kafka-installation
+
+kafka_2.11-1.1.0
+
+*.idea
+*target
+*.iml
+*.vscode
+node_modules
+
