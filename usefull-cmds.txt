@@ -1,0 +1,19 @@
+# clear kafka data
+rm -rf /tmp/*
+# start zookeper and kafka
+./bin/kafka-server-start.sh ./config/server.properties
+./bin/zookeeper-server-start.sh ./config/zookeeper.properties
+
+
+# create topics
+./bin/kafka-topics.sh --create --topic WordsWithCountsTopic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
+./bin/kafka-topics.sh --create --topic TextLinesTopic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
+
+# start producer from cmd line
+./bin/kafka-console-producer.sh --topic test --broker-list localhost:9092
+# consume from the topic using the console producer
+./bin/kafka-console-consumer.sh --topic test --zookeeper localhost:2181
+
+# get kafka
+wget http://apache.mirror.anlx.net/kafka/1.1.0/kafka-1.1.0-src.tgz
+wget http://mirrors.ukfast.co.uk/sites/ftp.apache.org/kafka/1.1.0/kafka_2.11-1.1.0.tgz
