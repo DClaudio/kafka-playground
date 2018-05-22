@@ -1,18 +1,18 @@
 # clear kafka data
 rm -rf /tmp/*
 # start zookeper and kafka
-./bin/kafka-server-start.sh ./config/server.properties
-./bin/zookeeper-server-start.sh ./config/zookeeper.properties
+./kafka_2.11-1.1.0/bin/zookeeper-server-start.sh ./kafka_2.11-1.1.0/config/zookeeper.properties > zookeeper.log &
+./kafka_2.11-1.1.0/bin/kafka-server-start.sh ./kafka_2.11-1.1.0/config/server.properties > kafka.log &
 
 
 # create topics
-./bin/kafka-topics.sh --create --topic WordsWithCountsTopic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
-./bin/kafka-topics.sh --create --topic TextLinesTopic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
+./kafka_2.11-1.1.0/bin/kafka-topics.sh --create --topic WordsWithCountsTopic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
+./kafka_2.11-1.1.0/bin/kafka-topics.sh --create --topic TextLinesTopic --zookeeper localhost:2181 --partitions 1 --replication-factor 1
 
 # start producer from cmd line
-./bin/kafka-console-producer.sh --topic test --broker-list localhost:9092
+./kafka_2.11-1.1.0/bin/kafka-console-producer.sh --topic TextLinesTopic --broker-list localhost:9092
 # consume from the topic using the console producer
-./bin/kafka-console-consumer.sh --topic test --zookeeper localhost:2181
+./kafka_2.11-1.1.0/bin/kafka-console-consumer.sh --topic WordsWithCountsTopic --zookeeper localhost:2181
 
 # get kafka
 wget http://apache.mirror.anlx.net/kafka/1.1.0/kafka-1.1.0-src.tgz

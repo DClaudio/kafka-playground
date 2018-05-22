@@ -1,24 +1,19 @@
-var kafka = require('kafka-node');
-console.log('Starting kafka client');
-const client = new kafka.KafkaClient({kafkaHost: '127.0.0.1:9092', groupId: 'test-consumer-group'});
-console.log('succesfully connected to kafka');
+const kafka = require('kafka-node');
 
-const consumer = new kafka.Consumer(
-    client,
-    [
-        { topic: 'WordsWithCountsTopic'}  
-    ],
-    {
-        autoCommit: false
-    }
-);
+
+const client = new kafka.KafkaClient({ kafkaHost: '127.0.0.1:9092' });
+const topcisToSubscribe = [{ topic: 'WordsWithCountsTopic' }];
+const options = { autoCommit: false, groupId: 'test-consumer-group'};
+
+const consumer = new kafka.Consumer(client, topcisToSubscribe, options);
 
 consumer.on('message', function (message) {
-    console.log(message);
+    console.log('--------------------')
+    console.log(`"${message.key}" showed up ${message.value} times`);
 });
 
 consumer.on('error', function (err) {
     console.log('Error was: ', err)
 });
 
-console.log('succesfully configured consumer');
+console.log('succesfully started consumer');
